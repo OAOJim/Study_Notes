@@ -39,6 +39,21 @@ Note: in GitHub use
 For the \begin{} and \end{} function 
 
 ### Matrix
+```math          
+\begin{matrix}
+a & b & c \\
+c & d & e \\
+f & g & h \\
+\end{matrix}
+```
+```latex
+\begin{matrix}
+a & b & c \\
+c & d & e \\
+f & g & h \\
+\end{matrix}
+```
+
 ```math 
 \begin{bmatrix}
 a & b & c \\
