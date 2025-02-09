@@ -1,7 +1,7 @@
-<dev align = "center">
+<div align = "center">
 
 # Hello, Notes
-Includes all the study notes in .md format.\
+Here includes all the study notes in .md format.\
 These notes are more like step by step study guide.\
 I do update my notes and please double check before using it.\
 Hope you love this and enjoy study with me~~
