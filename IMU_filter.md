@@ -1,7 +1,10 @@
+<center>
+
 # IMU Filter study note - Wrote by YiChun (Jim) Liao
 ## 1. Calibration 
 We use a 6 axis IMU which can be seperate into 2 different sensor, gyroscope and accelerometer.\
-We assume the IMU is orthogonal.\
+We assume the IMU is orthogonal.
+
 If the IMU is not orthogonal we have to fix sensor by this formula:\
 $\Large s^B = Ts^S, T= \begin{bmatrix}
 1               & -\beta_{yz}   & \beta_{zy} \\
@@ -9,41 +12,54 @@ $\Large s^B = Ts^S, T= \begin{bmatrix}
 -\beta_{xy}     & \beta_{yx}    & 1 
 \end{bmatrix}$ 
 
-For accelerometer, we set $\Large \beta_{xz}, -\beta_{xy}, \beta_{yx}$ zero:\
-$a^O = T^aa^S, T^a= \begin{bmatrix}
+For accelerometer, we set: 
+```math
+\Large \beta_{xz}, -\beta_{xy}, \beta_{yx} zero:\
+a^O = T^aa^S, T^a= \begin{bmatrix}
 1           & -\alpha_{yz}   & \alpha_{zy} \\
 0           & 1             & -\alpha_{zx}  \\
 0           & 0             & 1 
-\end{bmatrix}$
+\end{bmatrix}
+```
 
-For gyro scope, just the formula we got:\
-$\Large \omega^O = T^g\omega^S, T^g= \begin{bmatrix}
+For gyro scope, follow the $s^B$ we got:
+```math 
+\Large \omega^O = T^g\omega^S, T^g= \begin{bmatrix}
 1               & -\gamma_{yz}   & \gamma_{zy} \\
 \gamma_{xz}      & 1             & -\gamma_{zx}  \\
 -\gamma_{xy}     & \gamma_{yx}    & 1 
-\end{bmatrix}$ 
+\end{bmatrix}
+``` 
 
 
-<img src="./Non-orthogonal_sensor.png" width="500"/>
+<img src="./Images/Non-orthogonal_sensor.png" width="500"/>
 
 figure 1: A Non-orthogonal sensor. [1]
 
 We have bias for both gyro scope and accelerometer.
 we can find the zero offset by these formula.
 
-$\Large b^g = \frac{1}{N}\sum_{i=1}^{N} \omega^{bias}_i$
+```math
+\Large b^g = \frac{1}{N}\sum_{i=1}^{N} \omega^{bias}_i
+```
 
-$\Large b^a = \frac{1}{N}\sum_{i=1}^{N} a^{bias}_i$
+```math
+\Large b^a = \frac{1}{N}\sum_{i=1}^{N} a^{bias}_i
+```
 
 and they can be shown in matrix format:
 
-$\Large b^g = \begin{bmatrix} 
+```math
+\Large b^g = \begin{bmatrix} 
 b^g_x & b^g_y & b^g_z\\
-\end{bmatrix}^T$
+\end{bmatrix}^T
+```
 
-$\Large b^a = \begin{bmatrix} 
+```math
+\Large b^a = \begin{bmatrix} 
 b^a_x & b^a_y & b^a_z\\
-\end{bmatrix}^T$
+\end{bmatrix}^T
+```
 
 Sensor sensitivity (Scale factor) can be found by many ways.\
 For gyroscope, [1] have a great explain for how to get it with some algorithm.\
@@ -57,26 +73,32 @@ Note: If we want a better calibration for sensitivity, we will need to measure s
 
 Ending up get these matrix:
 
-$\Large K^g = \begin{bmatrix} 
+```math
+\Large K^g = \begin{bmatrix} 
 s^g_x   & 0     & 0\\
 0       & s^g_y & 0\\
 0       & 0     & s^g_z
-\end{bmatrix}$
+\end{bmatrix}
+```
 
-$\Large K^a = \begin{bmatrix} 
+```math
+\Large K^a = \begin{bmatrix} 
 s^a_x   & 0     & 0\\
 0       & s^a_y & 0\\
 0       & 0     & s^a_z
-\end{bmatrix}$
+\end{bmatrix}
+```
 
 ## 2. Quaternion vs Euler angles
 I used Euler angles and ending up have a huge gimbal lock problem. \
 For Euler angles is repersented with pitch, roll, and yaw.
 The rotation matrix for Euler angle is shown below:
 
-$\Large \begin{aligned}R=R_{z}(\alpha )\,R_{y}(\beta )\,R_{x}(\gamma )& \
+```math
+\Large \begin{aligned}R=R_{z}(\alpha )\,R_{y}(\beta )\,R_{x}(\gamma )& \
 ={\overset {\text{yaw}}{\begin{bmatrix}\cos \alpha &-\sin \alpha &0\\\sin \alpha &\cos \alpha &0\\0&0&1\\\end{bmatrix}}}{\overset {\text{pitch}}{\begin{bmatrix}\cos \beta &0&\sin \beta \\0&1&0\\-\sin \beta &0&\cos \beta \\\end{bmatrix}}}{\overset {\text{roll}}{\begin{bmatrix}1&0&0\\0&\cos \gamma &-\sin \gamma \\0&\sin \gamma &\cos \gamma \\\end{bmatrix}}}\\&
-={\begin{bmatrix}\cos \alpha \cos \beta &\cos \alpha \sin \beta \sin \gamma -\sin \alpha \cos \gamma &\cos \alpha \sin \beta \cos \gamma +\sin \alpha \sin \gamma \\\sin \alpha \cos \beta &\sin \alpha \sin \beta \sin \gamma +\cos \alpha \cos \gamma &\sin \alpha \sin \beta \cos \gamma -\cos \alpha \sin \gamma \\-\sin \beta &\cos \beta \sin \gamma &\cos \beta \cos \gamma \\\end{bmatrix}}\end{aligned}$
+={\begin{bmatrix}\cos \alpha \cos \beta &\cos \alpha \sin \beta \sin \gamma -\sin \alpha \cos \gamma &\cos \alpha \sin \beta \cos \gamma +\sin \alpha \sin \gamma \\\sin \alpha \cos \beta &\sin \alpha \sin \beta \sin \gamma +\cos \alpha \cos \gamma &\sin \alpha \sin \beta \cos \gamma -\cos \alpha \sin \gamma \\-\sin \beta &\cos \beta \sin \gamma &\cos \beta \cos \gamma \\\end{bmatrix}}\end{aligned}
+```
 
 Quaternion is great to simplfy compute process. Also it doesn't have a gimbal lock problem. 
 
@@ -88,36 +110,43 @@ $\Large q = q_r + q_ii + q_jj + q_kk$ $\Large (q_r,q_i,q_j,q_k\in R)$
 This is unit quaternion. Therefore, $\Large q_r^2 + q_i^2 + q_j^2 + q_k^2 = 1$
 
 Quaternion-derived rotation matrix: \
-$R =\begin{bmatrix}
+```math
+R =\begin{bmatrix}
 1-2s(q_j^2+q_k^2) & 2s(q_iq_j-q_kq_r) & 2s(q_iq_k+q_jq_r)\\
 2s(q_iq_j+q_kq_r) & 1-2s(q_i^2+q_k^2) & 2s(q_jq_k-q_iq_r)\\
 2s(q_iq_k-q_jq_r) & 2s(q_jq_k+q_iq_r) & 1-2s(q_i^2+q_j^2)
-\end{bmatrix}$\
+\end{bmatrix}
+```
 Where $\Large s = \left\| q \right\|^{-2} = 1^{-2}$ When q is a unit quaternion.
 
 Also, $\Large q_r = cos(\frac{1}{2} \theta), q_i = sin(\frac{1}{2} \theta)u_x, q_j = sin(\frac{1}{2} \theta)u_y, q_z = sin(\frac{1}{2} \theta)u_z$
 
 We need the quaternion differentiation of q for the angular speed $\frac{dq}{qt} = \dot{q} = \frac{1}{2}\Omega q$
 
-$\Large \Omega = \begin{bmatrix}
+```math
+\Large \Omega = \begin{bmatrix}
 0           & -\omega_x & -\omega_y & -\omega_z\\
 \omega_x    & 0         & \omega_z  & -\omega_y\\
 \omega_y    & -\omega_z & 0         & \omega_x\\
 \omega_z    & \omega_y  & -\omega_x & 0
-\end{bmatrix}$
+\end{bmatrix}
+```
 
 $\Large q_{t+\Delta t} = q_t + \dot{q} \cdot \Delta t$
 
 Quaternions to Euler angle:
 
-$\Large \begin{bmatrix} \theta \\ \phi \\ \psi\end{bmatrix} = \begin{bmatrix} arcsin(2(q_rq_j - q_iq_k))  \\ arctan(\frac{2q_rq_k+2q_iq_j}{1-2(q_j^2q_k^2)}) \\ arctan(\frac{2q_rq_i+2q_jq_k}{1-2(q_i^2q_j^2)})\end{bmatrix}$
+```math
+\Large \begin{bmatrix} \theta \\ \phi \\ \psi\end{bmatrix} = \begin{bmatrix} arcsin(2(q_rq_j - q_iq_k))  \\ arctan(\frac{2q_rq_k+2q_iq_j}{1-2(q_j^2q_k^2)}) \\ arctan(\frac{2q_rq_i+2q_jq_k}{1-2(q_i^2q_j^2)})\end{bmatrix}
+```
 
 ## 3. Gravity to angle
 since $g = \begin{bmatrix}
 0 & 0 & 1 
 \end{bmatrix}^T$, when imu is not accelerating, we get:
 
-$\Large h(q) = R \cdot g = \begin{bmatrix}
+```math
+\Large h(q) = R \cdot g = \begin{bmatrix}
 2(q_iq_k-q_jq_r) \\
 2(q_jq_k+q_iq_r) \\
 1-2(q_i^2+q_j^2)
@@ -129,7 +158,8 @@ q_r^2 - q_i^2 - q_j^2 + q_k^2
 a_x \\
 a_y \\
 a_z
-\end{bmatrix}$
+\end{bmatrix}
+```
 
 ## 4. Complementary filter
 
@@ -150,29 +180,38 @@ and use it as the data of gravity to Mahony filter.\
 Gyro scope will give us if the change of gravity comming from acceleration or angle change.
 By this, we can know if we should use the data from accelerometer.
 
-$\Large x = \begin{bmatrix}g_x, g_y, g_z\end{bmatrix}^T$
+```math 
+\Large x = \begin{bmatrix}g_x, g_y, g_z\end{bmatrix}^T 
+```
 
 $\Large s_k = F_kx_{k-1} + w_{k-1}$
 
 $\Large F_k = I + \Delta t \Omega$ ; since q_r is ignored. $\Omega$ becomes: 
 
-$\Large \Omega = \begin{bmatrix}
+```math
+\Large \Omega = \begin{bmatrix}
 0         & \omega_z  & -\omega_y\\
 -\omega_z & 0         & \omega_x\\
 \omega_y  & -\omega_x & 0
-\end{bmatrix}$
-
-$\Large F_k = \begin{bmatrix} 1         & \omega_z \Delta t  & -\omega_y \Delta t \\
+\end{bmatrix}
+```
+```math
+\Large F_k = \begin{bmatrix} 1         & \omega_z \Delta t  & -\omega_y \Delta t \\
 -\omega_z \Delta t & 1         & \omega_x \Delta t \\
-\omega_y \Delta t  & -\omega_x \Delta t  & 1  \end{bmatrix}$
+\omega_y \Delta t  & -\omega_x \Delta t  & 1  \end{bmatrix}
+```
 
-$\Large z = \begin{bmatrix} 
-a_x\\ a_y \\ a_z \end{bmatrix}$
+```math
+\Large z = \begin{bmatrix} 
+a_x\\ a_y \\ a_z \end{bmatrix}
+```
 
 $\Large z_k = H_kx_k + v_k$
 
-$\Large H_k = \begin{bmatrix} 
-1&0&0\\ 0&1&0 \\ 0&0&1 \end{bmatrix}$
+```math
+\Large H_k = \begin{bmatrix} 
+1&0&0\\ 0&1&0 \\ 0&0&1 \end{bmatrix}
+```
 
 Where: \
 $x_k$ is state estimate.\
@@ -203,10 +242,13 @@ I will use this one for our IMU.
 First, define $\Large x = \begin{bmatrix} q \end{bmatrix} = \begin{bmatrix} q_r\\ q_i \\ q_j \\ q_k \end{bmatrix}$
 
 Define state transition model:\
-$\Large f(x_k) = \begin{bmatrix} q_k + \frac{1}{2}(\Omega_k) \Delta t q_k \end{bmatrix}$
+```math
+\Large f(x_k) = \begin{bmatrix} q_k + \frac{1}{2}(\Omega_k) \Delta t q_k \end{bmatrix}
+```
 
 Define state transition model:\
-$\Large h(q) = R \cdot g = \begin{bmatrix}
+```math 
+\Large h(q) = R \cdot g = \begin{bmatrix}
 2(q_iq_k-q_jq_r) \\
 2(q_jq_k+q_iq_r) \\
 1-2(q_i^2+q_j^2)
@@ -214,7 +256,8 @@ $\Large h(q) = R \cdot g = \begin{bmatrix}
 2(q_iq_k-q_jq_r) \\
 2(q_jq_k+q_iq_r) \\
 q_r^2 - q_i^2 - q_j^2 + q_k^2
-\end{bmatrix}$
+\end{bmatrix}
+```
 
 Find the Jacobian of $f(x_k)$ and $h(x_k)$, $F_k$ and $H_k$, by MATLAB.
 ```objectivec
