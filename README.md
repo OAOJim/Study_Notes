@@ -5,6 +5,7 @@ Here includes all the study notes in .md format.\
 These notes are more like step by step study guide.\
 I do update my notes and please double check before using it.\
 Hope you love this and enjoy study with me~~
+</div>
 
 [How to write notes using .md file](./Markdown_note.md) -- (Working on it) Include What I normally use for .md file and what should not be used in Github's .md. 
 
