@@ -7,27 +7,27 @@ We assume the IMU is orthogonal.
 
 If the IMU is not orthogonal we have to fix sensor by this formula:\
 $\Large s^B = Ts^S, T= \begin{bmatrix}
-1               & -\beta_{yz}   & \beta_{zy} \\
-\beta_{xz}      & 1             & -\beta_{zx}  \\
--\beta_{xy}     & \beta_{yx}    & 1 
+1&-\beta_{yz}&\beta_{zy}\\
+\beta_{xz}&1& -\beta_{zx}\\
+-\beta_{xy}&\beta_{yx}&1\\
 \end{bmatrix}$ 
 
 For accelerometer, we set: 
 ```math
 \Large \beta_{xz}, -\beta_{xy}, \beta_{yx} zero:\
 a^O = T^aa^S, T^a= \begin{bmatrix}
-1           & -\alpha_{yz}   & \alpha_{zy} \\
-0           & 1             & -\alpha_{zx}  \\
-0           & 0             & 1 
+1& -\alpha_{yz}&\alpha_{zy}\\
+0&1& -\alpha_{zx}\\
+0&0&1\\
 \end{bmatrix}
 ```
 
 For gyro scope, follow the $s^B$ we got:
 ```math 
 \Large \omega^O = T^g\omega^S, T^g= \begin{bmatrix}
-1               & -\gamma_{yz}   & \gamma_{zy} \\
-\gamma_{xz}      & 1             & -\gamma_{zx}  \\
--\gamma_{xy}     & \gamma_{yx}    & 1 
+1& -\gamma_{yz}& \gamma_{zy}\\
+\gamma_{xz}&1& -\gamma_{zx}\\
+-\gamma_{xy}& \gamma_{yx}&1\\
 \end{bmatrix}
 ``` 
 

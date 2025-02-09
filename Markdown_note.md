@@ -2,6 +2,7 @@
 
 # Markdown note
 
+Features I used in my profile and notes.
 
 ## Centering Text
 To center text in Markdown:
