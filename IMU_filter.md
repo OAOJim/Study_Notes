@@ -1,5 +1,6 @@
-<p>
-<center>
+<p align="center">
+<!-- For VS code center --!>
+<center> 
 
 # IMU Filter study note - Wrote by YiChun (Jim) Liao
 ## 1. Calibration 
@@ -352,5 +353,4 @@ https://zhuanlan.zhihu.com/p/87254101
 [7]. 四元数EKF姿态更新算法 - 韭菜的菜的文章 - 知乎
 https://zhuanlan.zhihu.com/p/454155643
 
-</center>
 </p> 
