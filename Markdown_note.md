@@ -4,13 +4,13 @@
 
 
 ## Centering Text
-To center text in Markdown, you can use HTML tags:
-```html
-<p align="center">This text is centered.</p>
-```
-or you can do 
+To center text in Markdown:
 ```html
 <center> text need to be centered </center>
+```
+Center the whole file:
+```html
+<dev align ="center"> text need to be centered </center>
 ```
 
 ## Link
@@ -25,7 +25,7 @@ OR
 ```MD
 [This is the link back to this file]((./Markdown_note.md))
 ```
-
+Note: Both works for GitHub. I recommand link to file.
 
 
 
