@@ -1,10 +1,9 @@
 <div align = "center">
 
 # Hello, Notes
-Here includes all the study notes in .md format.\
-These notes are more like step by step study guide.\
+Here includes all the study notes in .md format. These notes are more like step by step study guide.\
 I do update my notes and please double check before using it.\
-Hope you love this and enjoy studying with me~~~
+~ Hope you love this and enjoy studying with me ~
 </div>
 
 [How to write notes using .md file](./Markdown_note.md) -- (Working on it) Include What I normally use for .md file and will include some useful external tools for GitHub's .md file.
