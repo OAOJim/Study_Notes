@@ -13,7 +13,7 @@ Hope you love this and enjoy studying with me~~~
 
 [Five Bar Linkage](./README.md) -- (Working on it) Include five bar linkage's kinematic and dynamic and the the approach to get the Jacobian matrix.
 
-[Motion Filter]  -- (Not yet) Filter the noice in the motion with several data source. 
+[Motion Filter]  -- (Not yet) Filter the noice in the motion with multiple data source. 
 
 [Balancing robot controller] -- (Not yet) Some controller ideas about Balancing includes PID, LQR.  
 
