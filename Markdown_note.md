@@ -1,6 +1,4 @@
-<p align="center">
-<!-- For VS code center --!>
-<center> 
+<div align="center">
 
 # Markdown note
 
