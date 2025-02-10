@@ -18,13 +18,11 @@ To find $\theta_2$
 <div id="1.1"style="padding-top: 50vh; margin-top: -50vh;"></div>
 
 ```math
-\begin{align}
 \Large
 \begin{cases} 
 x_B + L_2\cos(\theta_2) = x_D + L_3 \cos(\theta_3) \\
 y_B + L_2\sin(\theta_2) = x_D + L_3 \sin(\theta_3)
 \end{cases} \tag{1.1}
-\end{align}
 ```
 <div id="1.2"style="padding-top: 50vh; margin-top: -50vh;"></div>
 
