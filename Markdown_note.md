@@ -110,19 +110,23 @@ f & g & h \\
 ##
 ### Cases
 ```math 
+\begin{align}
 \begin{cases}
 a = b + c \\
 b = a + c \\
 c = a + b \\
 \end{cases}
+\end{align}
 ```
 
 ```latex
+\begin{align}
 \begin{cases}
 a = b + c \\
 b = a + c \\
 c = a + b \\
 \end{cases}
+\end{align}
 ```
 ##
 ### Label an equation
@@ -135,7 +139,9 @@ A = B + C
 
 ```latex
 \tag{1.1}
-A=B+C
+\begin{align}
+A = B + C 
+\end{align}
 ```
 
 
