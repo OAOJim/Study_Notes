@@ -1,17 +1,32 @@
 <div align="center">
 
 # IMU Filter study note - Wrote by YiChun (Jim) Liao
+</div>
+
+:orange_circle:[1. Calibration](#1-calibration)\
+:orange_circle:[2. Quaternion vs Euler Angles ](#2-quaternion-vs-euler-angles)\
+:red_circle:[3. Complementary Filter](#3-complementary-filter)\
+:orange_circle:[4. Kalman + Mahony Filter ](#4-kalman--mahony-filter)\
+:orange_circle:[5. EKF (Extended Kalman filter) with 6 axis](#5-ekf-extended-kalman-filter-with-6-axis)\
+:red_circle:[6. EKF with 9 axis](#6-ekf-with-9-axis)
+<div align="center">
+
 ## 1. Calibration 
 We use a 6 axis IMU which can be seperate into 2 different sensor, gyroscope and accelerometer.\
 We assume the IMU is orthogonal.
 
-If the IMU is not orthogonal we have to fix sensor by this formula:\
-$\Large s^B = Ts^S, T= \begin{bmatrix}
+If the IMU is not orthogonal, we need to fix that
+
+<img src="./Images/Non-orthogonal_sensor.png" width="500"/>
+
+```math 
+\Large s^B = Ts^S, T= \begin{bmatrix}
 1&-\beta_{yz}&\beta_{zy}\\
 \beta_{xz}&1& -\beta_{zx}\\
 -\beta_{xy}&\beta_{yx}&1\\
-\end{bmatrix}$ 
-
+\end{bmatrix}
+``` 
+##
 For accelerometer, we set: 
 ```math
 \Large \beta_{xz}, -\beta_{xy}, \beta_{yx} zero:\
@@ -21,7 +36,7 @@ a^O = T^aa^S, T^a= \begin{bmatrix}
 0&0&1\\
 \end{bmatrix}
 ```
-
+##
 For gyro scope, follow the $s^B$ we got:
 ```math 
 \Large \omega^O = T^g\omega^S, T^g= \begin{bmatrix}
@@ -30,37 +45,30 @@ For gyro scope, follow the $s^B$ we got:
 -\gamma_{xy}& \gamma_{yx}&1\\
 \end{bmatrix}
 ``` 
-
-
-<img src="./Images/Non-orthogonal_sensor.png" width="500"/>
-
-figure 1: A Non-orthogonal sensor. [1]
+##
 
 We have bias for both gyro scope and accelerometer.
 we can find the zero offset by these formula.
 
 ```math
-\Large b^g = \frac{1}{N}\sum_{i=1}^{N} \omega^{bias}_i
+\Large \begin{cases} b^g = \frac{1}{N}\sum_{i=1}^{N} \omega^{bias}_i \\
+ b^a = \frac{1}{N}\sum_{i=1}^{N} a^{bias}_i
+ \end{cases}
 ```
-
+##
+They can be shown in matrix format:
 ```math
-\Large b^a = \frac{1}{N}\sum_{i=1}^{N} a^{bias}_i
-```
-
-and they can be shown in matrix format:
-
-```math
-\Large b^g = \begin{bmatrix} 
+\Large
+\begin{cases} 
+b^g = \begin{bmatrix} 
 b^g_x & b^g_y & b^g_z\\
-\end{bmatrix}^T
-```
-
-```math
-\Large b^a = \begin{bmatrix} 
+\end{bmatrix}^T \\
+b^a = \begin{bmatrix} 
 b^a_x & b^a_y & b^a_z\\
 \end{bmatrix}^T
+\end{cases}
 ```
-
+##
 Sensor sensitivity (Scale factor) can be found by many ways.\
 For gyroscope, [1] have a great explain for how to get it with some algorithm.\
 For accelerometer, I calibrate the sensitivity by this formula. 
@@ -70,7 +78,7 @@ $\Large s_a = \frac{g}{\sqrt{a_x^2 + a_y^2 + a_z^2}}$
 Where g is the gravity.
 
 Note: If we want a better calibration for sensitivity, we will need to measure several angles to get 3 axis data for each sensor. 
-
+##
 Ending up get these matrix:
 
 ```math
@@ -90,6 +98,7 @@ s^a_x   & 0     & 0\\
 ```
 
 ## 2. Quaternion vs Euler angles
+### Euler Angle
 I used Euler angles and ending up have a huge gimbal lock problem. \
 For Euler angles is repersented with pitch, roll, and yaw.
 The rotation matrix for Euler angle is shown below:
@@ -103,18 +112,23 @@ The rotation matrix for Euler angle is shown below:
 \Large
 ={\begin{bmatrix}\cos \alpha \cos \beta &\cos \alpha \sin \beta \sin \gamma -\sin \alpha \cos \gamma &\cos \alpha \sin \beta \cos \gamma +\sin \alpha \sin \gamma \\\sin \alpha \cos \beta &\sin \alpha \sin \beta \sin \gamma +\cos \alpha \cos \gamma &\sin \alpha \sin \beta \cos \gamma -\cos \alpha \sin \gamma \\-\sin \beta &\cos \beta \sin \gamma &\cos \beta \cos \gamma \\\end{bmatrix}}
 ```
-
+##
+### Quaternion
 Quaternion is great to simplfy compute process. Also it doesn't have a gimbal lock problem. 
 
-[This](https://krasjet.github.io/quaternion/quaternion.pdf) [3] is a really good turtorial for quaternion (Chinese).
+[[3]](https://krasjet.github.io/quaternion/quaternion.pdf) is a really good and detail turtorial for quaternion (Chinese).
+##
+The represented form of quaternion:
 
-The represented form of quaternion: \
 $\Large q = q_r + q_ii + q_jj + q_kk$ $\Large (q_r,q_i,q_j,q_k\in R)$ 
 
 This is unit quaternion. Therefore, $\Large q_r^2 + q_i^2 + q_j^2 + q_k^2 = 1$
+##
+Quaternion-derived rotation matrix: 
+<div id="2.1"style="padding-top: 50vh; margin-top: -50vh; "></div>
 
-Quaternion-derived rotation matrix: \
-```math
+```math 
+\Large \tag{2.1}
 R =\begin{bmatrix}
 1-2s(q_j^2+q_k^2) & 2s(q_iq_j-q_kq_r) & 2s(q_iq_k+q_jq_r)\\
 2s(q_iq_j+q_kq_r) & 1-2s(q_i^2+q_k^2) & 2s(q_jq_k-q_iq_r)\\
@@ -122,9 +136,8 @@ R =\begin{bmatrix}
 \end{bmatrix}
 ```
 Where $\Large s = \left\| q \right\|^{-2} = 1^{-2}$ When q is a unit quaternion.
-
 Also, $\Large q_r = cos(\frac{1}{2} \theta), q_i = sin(\frac{1}{2} \theta)u_x, q_j = sin(\frac{1}{2} \theta)u_y, q_z = sin(\frac{1}{2} \theta)u_z$
-
+##
 We need the quaternion differentiation of q for the angular speed $\frac{dq}{qt} = \dot{q} = \frac{1}{2}\Omega q$
 
 ```math
@@ -137,18 +150,17 @@ We need the quaternion differentiation of q for the angular speed $\frac{dq}{qt}
 ```
 
 $\Large q_{t+\Delta t} = q_t + \dot{q} \cdot \Delta t$
-
+##
 Quaternions to Euler angle:
 
 ```math
 \Large \begin{bmatrix} \theta \\ \phi \\ \psi\end{bmatrix} = \begin{bmatrix} arcsin(2(q_rq_j - q_iq_k))  \\ arctan(\frac{2q_rq_k+2q_iq_j}{1-2(q_j^2q_k^2)}) \\ arctan(\frac{2q_rq_i+2q_jq_k}{1-2(q_i^2q_j^2)})\end{bmatrix}
 ```
-
-## 3. Gravity to angle
+##
+### Gravity to angle
 since $g = \begin{bmatrix}
 0 & 0 & 1 
 \end{bmatrix}^T$, when imu is not accelerating, we get:
-
 ```math
 \Large h(q) = R \cdot g = \begin{bmatrix}
 2(q_iq_k-q_jq_r) \\
@@ -164,29 +176,30 @@ a_y \\
 a_z
 \end{bmatrix}
 ```
-
-## 4. Complementary filter
-
+## 3. Complementary Filter
 
 
 
 
 
-## 5. Kalman filter + Mahony
 
-Pros: Low cost, easy to use
+## 4. Kalman + Mahony Filter
+
+Pros: Low cost, easy to use\
 Cons: not that accurate compare to EKF
 
 Mahony filter have a major disadvantage is it used measure acceleration as the real gravity. 
 This makes it have a huge error when accelerating. BY using EKF, we can predict the gravity 
-and use it as the data of gravity to Mahony filter.\
+and use it as the data of gravity to Mahony filter.
 
 Gyro scope will give us if the change of gravity comming from acceleration or angle change.
 By this, we can know if we should use the data from accelerometer.
-
+##
+Define the state estimate be the gravity which we want to predict
 ```math 
 \Large x = \begin{bmatrix}g_x, g_y, g_z\end{bmatrix}^T 
 ```
+##
 
 $\Large s_k = F_kx_{k-1} + w_{k-1}$
 
@@ -233,7 +246,7 @@ $H_k$ is observation model.
 
 Ending up I choose not to use this filter. 
 
-## 6. EKF (Extended Kalman filter) with 6 axis
+## 5. EKF (Extended Kalman filter) with 6 axis
 
 With EKF we can predict from differentiable functions. We don't need to find a linear function for it.
 
@@ -295,44 +308,7 @@ The people also used Chi-squared test which is too expensive compare to its bene
 
 There are people also predict $\omega^{bias}$ Since our robot runs in a really stable environment and short time. We don't need to predict bias.
 
-## 7. EKF with 9 axis  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 7. Check calculation cost
-
-Since these algorithm takes sometimes to calculate, we need to make sure the robot can still running in desire rate. If the robot can not run at desire rate, reduce the IMU update rate to 200Hz. At this rate IMU can still give really good data.
-
-
-
-
-
-
-
-
-
-
-
-
+## 6. EKF with 9 axis  
 
 
 
