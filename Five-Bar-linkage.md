@@ -31,10 +31,12 @@ y_B + L_2\sin(\theta_2) = x_D + L_3 \sin(\theta_3)
 Move $x_D$ to the left side and Square both sides
 ```math
 \Large
+\begin{equation}
 \begin{cases} 
 (x_B + L_2\cos(\theta_2)-x_D)^2 = (L_3 \cos(\theta_3))^2 \\
 (y_B + L_2\sin(\theta_2)-y_D)^2 = (L_3 \sin(\theta_3))^2
 \end{cases} \tag{1.2}
+\end{equation}
 ```
 ##
 Solve [(1.2)](#1.2) we get
