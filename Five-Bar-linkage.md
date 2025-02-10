@@ -3,13 +3,13 @@
 # Five Bar Inverse Kinematics and Virtual Model Control
 </div>
 
-:green_circle:[1. Find leg length and θ₀](#1-find-leg-length-and-$\theta_0$)\
+:green_circle:[1. Find leg length and θ₀](#1-find-leg-length-and-θ)\
 :green_circle:[2. Find equations for velocity](#2-find-equations-for-velocity)\
 :red_circle:[3. Virtual Model Control](#3-virtual-model-control)
 
 <div align="center">
 
-## 1. Find leg length and $\theta_0$
+## 1. Find leg length and θ₀
 <img src="./Images/fivebar.png" width="500"/>
 
 ##
