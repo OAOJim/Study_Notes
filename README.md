@@ -14,7 +14,7 @@
 
 :orange_circle: [IMU Calibration and Filters](./IMU_filter.md) -- Include basic calibration knowledge and several useful filters.
 
-:orange_circle: [Five Bar Linkage](./README.md) -- Include five bar linkage's kinematic and dynamic and the the approach to get the Jacobian matrix.
+:orange_circle: [Five Bar Linkage](./Five-Bar-linkage.md) -- Include five bar linkage's kinematic and dynamic and the the approach to get the Jacobian matrix.
 
 :red_circle: [Motion Filter]  -- Filter the noice in the motion with multiple data source. 
 
