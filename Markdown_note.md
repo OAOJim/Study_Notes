@@ -128,8 +128,9 @@ c = a + b \\
 ### Label an equation
 ```math 
 \tag{1.1}
-
+\begin{align}
 A = B + C 
+\end{align}
 ```
 
 ```latex
