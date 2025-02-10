@@ -3,7 +3,7 @@
 # Five Bar Inverse Kinematics and Virtual Model Control
 </div>
 
-:green_circle:[1. Find leg length and $\theta_0$](#1-find-leg-length-and)\
+:green_circle:[1. Find leg length and ](#1-find-leg-length-and)\
 :green_circle:[2. Find equations for velocity](#2-find-equations-for-velocity)\
 :red_circle:[3. Virtual Model Control](#3-virtual-model-control)
 
@@ -18,11 +18,11 @@ To find $\theta_2$
 <div id="1.1"style="padding-top: 50vh; margin-top: -50vh;"></div>
 
 ```math
-\Large\tag{1.1}
+\Large
 \begin{cases} 
 x_B + L_2\cos(\theta_2) = x_D + L_3 \cos(\theta_3) \\
 y_B + L_2\sin(\theta_2) = x_D + L_3 \sin(\theta_3)
-\end{cases} 
+\end{cases} \tag{1.1}
 ```
 <div id="1.2"style="padding-top: 50vh; margin-top: -50vh;"></div>
 
@@ -30,17 +30,17 @@ y_B + L_2\sin(\theta_2) = x_D + L_3 \sin(\theta_3)
 
 Move $x_D$ to the left side and Square both sides
 ```math
-\Large\tag{1.2}
+\Large
 \begin{cases} 
 (x_B + L_2\cos(\theta_2)-x_D)^2 = (L_3 \cos(\theta_3))^2 \\
 (y_B + L_2\sin(\theta_2)-y_D)^2 = (L_3 \sin(\theta_3))^2
-\end{cases} 
+\end{cases} \tag{1.2}
 ```
 ##
 Solve [(1.2)](#1.2) we get
 ```math
-\Large\tag{1.3}
-A\cdot cos(\theta_2) + B\cdot sin(\theta_2) = C
+\Large
+A\cdot cos(\theta_2) + B\cdot sin(\theta_2) = C \tag{1.3}
 ```
 ```math
 \Large
