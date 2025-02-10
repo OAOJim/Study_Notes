@@ -125,7 +125,7 @@ $\Large q = q_r + q_ii + q_jj + q_kk$ $\Large (q_r,q_i,q_j,q_k\in R)$
 This is unit quaternion. Therefore, $\Large q_r^2 + q_i^2 + q_j^2 + q_k^2 = 1$
 ##
 Quaternion-derived rotation matrix: 
-<div id="2.1"style="padding-top: 50vh; margin-top: -50vh; "></div>
+<div id="2.1"></div>
 
 ```math 
 \Large \tag{2.1}

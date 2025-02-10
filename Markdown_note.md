@@ -60,23 +60,6 @@ And use same way to link to the location\
 [Back to here](#here1)
 ```
 ##
-
-#### You will find that this way will make the label place at the top of user's view. Here is the way to fix that. 
-<div id="here2"style="padding-top: 50vh; margin-top: -50vh; "></div>
-
-```MD
-<div id="here2"style="padding-top: 50vh; margin-top: -50vh;"></div>
-```
-``padding-top: 50vh;`` adds padding by 50% of the viewport height.\
-``margin-top: -50vh;`` adds a negative margin by 50% of the viewport height.
-
-[Back to here](#here2)
-
-```md
-[Back to here](#here2)
-```
-Now the label place will be at the middle of the user's view.
-##
 ### Link to a title
 [Back to the top](#markdown-note)
 
@@ -145,7 +128,8 @@ c = a + b \\
 ### Label an equation
 ```math 
 \tag{1.1}
-A=B+C
+
+A = B + C 
 ```
 
 ```latex

@@ -15,7 +15,7 @@
 ##
 
 To find $\theta_2$
-<div id="1.1"style="padding-top: 50vh; margin-top: -50vh;"></div>
+<div id="1.1"></div>
 
 ```math
 \Large
@@ -24,19 +24,17 @@ x_B + L_2\cos(\theta_2) = x_D + L_3 \cos(\theta_3) \\
 y_B + L_2\sin(\theta_2) = x_D + L_3 \sin(\theta_3)
 \end{cases} \tag{1.1}
 ```
-<div id="1.2"style="padding-top: 50vh; margin-top: -50vh;"></div>
+<div id="1.2"></div>
 
 ##
 
 Move $x_D$ to the left side and Square both sides
 ```math
 \Large
-\begin{equation}
 \begin{cases} 
 (x_B + L_2\cos(\theta_2)-x_D)^2 = (L_3 \cos(\theta_3))^2 \\
 (y_B + L_2\sin(\theta_2)-y_D)^2 = (L_3 \sin(\theta_3))^2
 \end{cases} \tag{1.2}
-\end{equation}
 ```
 ##
 Solve [(1.2)](#1.2) we get
@@ -71,7 +69,7 @@ x_C = L_1\cos(\theta_1) + L_2 \cos(\theta_2) \\
 y_C = L_1\sin(\theta_1) + L_2 \sin(\theta_2)
 \end{cases} 
 ```
-<div id="1.7"style="padding-top: 50vh; margin-top: -50vh;"></div>
+<div id="1.7"></div>
 
 ##
 ```math
