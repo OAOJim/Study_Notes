@@ -27,9 +27,9 @@ If the IMU is not orthogonal, we need to fix that
 \end{bmatrix}
 ``` 
 ##
-For accelerometer, we set: 
+For accelerometer, we set $\beta_{xz}, -\beta_{xy}, \beta_{yx}$ zero: 
 ```math
-\Large \beta_{xz}, -\beta_{xy}, \beta_{yx} zero:\
+\Large
 a^O = T^aa^S, T^a= \begin{bmatrix}
 1& -\alpha_{yz}&\alpha_{zy}\\
 0&1& -\alpha_{zx}\\
