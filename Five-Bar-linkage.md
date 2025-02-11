@@ -31,11 +31,11 @@ y_B + L_2\sin(\theta_2) = x_D + L_3 \sin(\theta_3)
 
 Move $x_D$ to the left side and Square both sides
 ```math
-\Large
+\Large \tag*{} 
 \begin{cases} 
 (x_B + L_2\cos(\theta_2)-x_D)^2 = (L_3 \cos(\theta_3))^2 \\
 (y_B + L_2\sin(\theta_2)-y_D)^2 = (L_3 \sin(\theta_3))^2
-\end{cases} \tag{1.2}
+\end{cases} 
 ```
 ##
 Solve [(1.2)](#1.2)
@@ -46,7 +46,7 @@ Solve [(1.2)](#1.2)
 A\cdot cos(\theta_2) + B\cdot sin(\theta_2) = C \tag{1.3}
 ```
 ```math
-\Large
+\Large\tag*{} 
 \begin{cases} 
 A = 2 \cdot L_2 \cdot (x_B - x_D) \\
 B = 2 \cdot L_2 \cdot (y_B - y_D) \\
@@ -99,7 +99,7 @@ Note: This function depends on the direction you set for your IMU and $\theta_0$
 We now have
 
 ```math 
-\Large\theta = \begin{bmatrix} \theta_0 \\ \theta_1 \\ \theta_2 \\ \theta_3 \\ \theta_4 \end{bmatrix}
+\Large \tag*{} \theta = \begin{bmatrix} \theta_0 \\ \theta_1 \\ \theta_2 \\ \theta_3 \\ \theta_4 \end{bmatrix}
 ```
 ##
 From the encoder, we can get $\dot{\theta_1}$ and $\dot{\theta_4}$. We have a great idea that we can use encoder data instead of the derivative of angle data to find the $\dot\theta_0$
@@ -275,7 +275,7 @@ J_{final}=
 \end{bmatrix}
 ```
 ```math
-\large 
+\large \tag*{} 
 J_{final}=
 \begin{bmatrix}
 \frac{L_1sin(\theta_0 - \theta_3)sin(\theta_1 - \theta_2)}{sin(\theta_3 - \theta_2)}& \frac{L_1sin(\theta_1 - \theta_2)cos(\theta_0 - \theta_3)}{L_0sin(\theta_3 - \theta_2)}\\

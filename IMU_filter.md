@@ -256,14 +256,18 @@ From [5] we can get a EKF model. Vary similar to the one for KF. Also from [6] s
 In [7], it shows a similar algorithm with a 6 axis IMU which is what we want. 
 
 I will use this one for our IMU. 
+##
 
-First, define $\Large x = \begin{bmatrix} q \end{bmatrix} = \begin{bmatrix} q_r\\ q_i \\ q_j \\ q_k \end{bmatrix}$
-
+First, define 
+```math
+\Large x = \begin{bmatrix} q \end{bmatrix} = \begin{bmatrix} q_r\\ q_i \\ q_j \\ q_k \end{bmatrix}
+```
+##
 Define state transition model:\
 ```math
 \Large f(x_k) = \begin{bmatrix} q_k + \frac{1}{2}(\Omega_k) \Delta t q_k \end{bmatrix}
 ```
-
+##
 Define state transition model:\
 ```math 
 \Large h(q) = R \cdot g = \begin{bmatrix}
@@ -276,7 +280,7 @@ Define state transition model:\
 q_r^2 - q_i^2 - q_j^2 + q_k^2
 \end{bmatrix}
 ```
-
+##
 Find the Jacobian of $f(x_k)$ and $h(x_k)$, $F_k$ and $H_k$, by MATLAB.
 ```objectivec
 syms q0 q1 q2 q3;
@@ -299,15 +303,15 @@ h = [2*(q1*q3 - q0*q2);
      q0^2 - q1^2 - q2^2 + q3^2];
 H = simplify(jacobian(h,x))
 ```
+##
+Then follow the equations for EKF.
 
-Then follow the formula for EKF. (With some simplification which helps reduce calculation cost)
 
+Note: Since the gravity is point down all the time. We need to ignore $q_k$ in the updata 
 
-Note: Since the gravity is point down already. We need to ignore $q_k$ in the updata 
+The people also used Chi-squared test I will do futher learning in that later
 
-The people also used Chi-squared test which is too expensive compare to its benefits. I use a simple vector test to replace it.
-
-There are people also predict $\omega^{bias}$ Since our robot runs in a really stable environment and short time. We don't need to predict bias.
+There are people also predict $\omega^{bias}$ Since our robot runs in a really stable environment and short time. We don't need to do bias.
 
 ## 6. EKF with 9 axis  
 
