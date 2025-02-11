@@ -73,8 +73,9 @@ b^a_x & b^a_y & b^a_z\\
 Sensor sensitivity (Scale factor) can be found by many ways.\
 For gyroscope, [1] have a great explain for how to get it with some algorithm.\
 For accelerometer, I calibrate the sensitivity by this formula. 
-
-$\Large s_a = \frac{g}{\sqrt{a_x^2 + a_y^2 + a_z^2}}$ 
+```math
+\Large \tag*{} s_a = \frac{g}{\sqrt{a_x^2 + a_y^2 + a_z^2}}
+```
 
 Where g is the gravity.
 
@@ -110,7 +111,7 @@ The rotation matrix for Euler angle is shown below:
 \end{aligned}
 ```
 ```math
-\Large
+\Large \tag*{}
 ={\begin{bmatrix}\cos \alpha \cos \beta &\cos \alpha \sin \beta \sin \gamma -\sin \alpha \cos \gamma &\cos \alpha \sin \beta \cos \gamma +\sin \alpha \sin \gamma \\\sin \alpha \cos \beta &\sin \alpha \sin \beta \sin \gamma +\cos \alpha \cos \gamma &\sin \alpha \sin \beta \cos \gamma -\cos \alpha \sin \gamma \\-\sin \beta &\cos \beta \sin \gamma &\cos \beta \cos \gamma \\\end{bmatrix}}
 ```
 ##
