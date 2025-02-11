@@ -147,7 +147,7 @@ Note:  $L_2 = L_3$ and $L_1 = L_4$ in many design cases.
 ## 3. Virtual Model Control
 Virtual model control is a motion control framework which uses virtual components to calculate virtual forces. By this, we can get a why to get motors' torques for the controller's output. 
 
-In the [Balancing robot controller](./Balancing_controller) we get the $\vec F$ and $\vec T$
+In the [Balancing robot controller](./Balancing_controller) we get the $\vec F$ and $T$
 
 Therefore, we need to get a matrix to find torques of 2 motors control $\theta_1$ and $\theta_4$
 ##
