@@ -1,6 +1,7 @@
 <div align="center">
 
-# IMU Filter study note - Wrote by YiChun (Jim) Liao
+# IMU Calibration & Filters
+YiChun (Jim) Liao
 </div>
 
 :orange_circle:[1. Calibration](#1-calibration)\

@@ -1,8 +1,7 @@
 <div align="center">
 
-
-
 # Markdown note
+YiChun (Jim) Liao
 </div>
 
 :orange_circle:[1. Format](#1-format)\

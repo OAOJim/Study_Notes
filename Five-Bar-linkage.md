@@ -1,6 +1,7 @@
 <div align="center">
 
 # Five Bar Inverse Kinematics and Virtual Model Control
+YiChun (Jim) Liao
 </div>
 
 :green_circle:[1. Find leg length and θ₀](#1-find-leg-length-and-θ)\
