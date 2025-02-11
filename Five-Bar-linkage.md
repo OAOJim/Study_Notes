@@ -15,7 +15,7 @@ YiChun (Jim) Liao
 
 ##
 
-To find $\theta_2$, we can these 2 equations. LHS and RHS represent same point.
+To find $\displaystyle \theta_2$, we can these 2 equations. LHS and RHS represent same point.
 <div id="1.1"></div>
 
 ```math
@@ -122,8 +122,8 @@ We can get:
 ```
 
 ```math
-\Large
-\begin{cases} 
+\Large \tag*{}
+\begin{cases}
 \dot x_B = -L_1\dot \theta_1\sin(\theta_1) \\
 \dot y_B = L_1\dot \theta_1\cos(\theta_1) \\
 \dot x_D = -L_4\dot \theta_4\sin(\theta_4) \\
