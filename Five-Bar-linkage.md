@@ -14,7 +14,7 @@
 
 ##
 
-To find $\theta_2$
+To find $\theta_2$, we can these 2 equations. LHS and RHS represent same point.
 <div id="1.1"></div>
 
 ```math
@@ -37,7 +37,9 @@ Move $x_D$ to the left side and Square both sides
 \end{cases} \tag{1.2}
 ```
 ##
-Solve [(1.2)](#1.2) we get
+Solve [(1.2)](#1.2)
+<div id="1.3"></div>
+
 ```math
 \Large
 A\cdot cos(\theta_2) + B\cdot sin(\theta_2) = C \tag{1.3}
@@ -52,6 +54,7 @@ L_{BD} = \sqrt{(x_B - x_D)^2 + (y_B - y_D)^2}
 \end{cases} 
 ```
 ## 
+Solve [(1.3)](#1.3)
 ```math
 \Large \tag{1.4}
 \begin{cases} 
@@ -171,17 +174,6 @@ Therefore, ending up using velocity to derive $J$ matrix.
 ##
 From the [Find euqations for velocity](#2-find-equations-for-velocity), we got the relation between angular velocity and velocity. 
 
-We can use MATLAB to help finding the relation matrix $J$
-
-```math
-\large \tag{3.2}
-J_{xy}=
-\begin{bmatrix}
-\frac{L_1*sin(\theta_3)*sin(\theta_1 - \theta_2)}{sin(\theta_2 - \theta_3)}&  \frac{L_4*sin(\theta_2)*sin(\theta_3 - \theta_4)}{sin(\theta_2 - \theta_3)}\\
--\frac{L_1*cos(\theta_3)*sin(\theta_1 - \theta_2)}{sin(\theta_2 - \theta_3)}& -\frac{L_4*cos(\theta_2)*sin(\theta_3 - \theta_4)}{sin(\theta_2 - \theta_3)}
-\end{bmatrix}
-```
-## 
 ```math
 \large \tag{3.3}
 \begin{bmatrix}
@@ -193,6 +185,19 @@ J_{xy}\begin{bmatrix}
 \dot \theta_4
 \end{bmatrix}
 ```
+##
+We can use MATLAB to help finding the relation matrix $J_{xy}$
+
+```math
+\large \tag{3.2}
+J_{xy}=
+\begin{bmatrix}
+\frac{L_1*sin(\theta_3)*sin(\theta_1 - \theta_2)}{sin(\theta_2 - \theta_3)}&  \frac{L_4*sin(\theta_2)*sin(\theta_3 - \theta_4)}{sin(\theta_2 - \theta_3)}\\
+-\frac{L_1*cos(\theta_3)*sin(\theta_1 - \theta_2)}{sin(\theta_2 - \theta_3)}& -\frac{L_4*cos(\theta_2)*sin(\theta_3 - \theta_4)}{sin(\theta_2 - \theta_3)}
+\end{bmatrix}
+```
+
+Note: the [MATLAB code](#matlab-code)
 ##
 We want convert force back to torque.
 ```math
@@ -260,7 +265,8 @@ J_{final}=
 
 
 ##
-The MATLAB code for finding $J_{final}$
+
+#### MATLAB code
 ```MATLAB
 syms theta0(t) theta1(t) theta2(t) theta3(t) theta4(t) theta_dot_1 theta_dot_4 l1 l2 l3 l4 l5 l0
 x_B = l1*cos(theta1);
