@@ -148,11 +148,4 @@ A = B + C
 
 
 ## Test zone
-```math
-\begin{equation} \tag{1.1}
-\begin{array}{l}
-\displaystyle x_B + L_2\cos(\theta_2) = x_D + L_3 \cos(\theta_3) \
-\displaystyle y_B + L_2\sin(\theta_2) = x_D + L_3 \sin(\theta_3)
-\end{array}
-\end{equation}
-```
+

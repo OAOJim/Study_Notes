@@ -5,7 +5,7 @@
 
 :green_circle:[1. Find leg length and θ₀](#1-find-leg-length-and-θ)\
 :green_circle:[2. Find equations for velocity](#2-find-equations-for-velocity)\
-:red_circle:[3. Virtual Model Control](#3-virtual-model-control)
+:green_circle:[3. Virtual Model Control](#3-virtual-model-control)
 
 <div align="center">
 
@@ -106,7 +106,7 @@ We can get:
 
 ```math
 \Large\tag{2.2}
-\dot \theta_2 = \frac{(\dot x_D -\dot x_B )\cos(\theta_3) + (\dot y_D -\dot y_B )\sin(\theta_3)}{L_2\sin(\theta3 -\theta2)}
+\dot \theta_2 = \frac{(\dot x_B -\dot x_D )\cos(\theta_3) + (\dot y_B -\dot y_D )\sin(\theta_3)}{L_2\sin(\theta2 -\theta3)}
 ```
 
 ```math
@@ -118,7 +118,10 @@ We can get:
 \dot y_D = L_4\dot \theta_4\cos(\theta_4) \end{cases} 
 ```
 ##
-Then find: 
+Then find $\dot x_C$ and $\dot y_C$: 
+
+<div id="2.3"></div>
+
 ```math
 \Large\tag{2.3}
 \begin{cases} 
@@ -139,13 +142,161 @@ From [(1.7)](#1.7) we can get:
 Note:  $L_2 = L_3$ and $L_1 = L_4$ in many design cases. 
 ##
 ## 3. Virtual Model Control
-Virtual model control is a motion control framework which uses virtual components to calculate virtual forces. By this, we can simplfy the calculation for the controller's output. 
+Virtual model control is a motion control framework which uses virtual components to calculate virtual forces. By this, we can get a why to get motors' torques for the controller's output. 
 
 In the [Balancing robot controller](./Balancing_controller) we get the $\vec F$ and $\vec T$
 
-In this VMC, we need to get the torque of 2 motors control $\theta_1$ and $\theta_4$
+Therefore, we need to get a matrix to find torques of 2 motors control $\theta_1$ and $\theta_4$
 ##
+First we set the virtural force
 
+```math
+\large \tag{3.1}
+F =
+\begin{bmatrix}
+\vec F\\
+ T
+\end{bmatrix}
+= J_{final} \begin{bmatrix}
+T_1\\
+T_4
+\end{bmatrix}
+```
+##
+We can find the Jacobian matirx form either angle-position or angular velocity-velocity. Both methods will give the same $J_{final}$ matrix.
+
+However, the Jacobian matrix derived using position will be really long due to the complexity of the trigonometric relationships involved.
+
+Therefore, ending up using velocity to derive $J$ matrix.
+##
+From the [Find euqations for velocity](#2-find-equations-for-velocity), we got the relation between angular velocity and velocity. 
+
+We can use MATLAB to help finding the relation matrix $J$
+
+```math
+\large \tag{3.2}
+J_{xy}=
+\begin{bmatrix}
+\frac{L_1*sin(\theta_3)*sin(\theta_1 - \theta_2)}{sin(\theta_2 - \theta_3)}&  \frac{L_4*sin(\theta_2)*sin(\theta_3 - \theta_4)}{sin(\theta_2 - \theta_3)}\\
+-\frac{L_1*cos(\theta_3)*sin(\theta_1 - \theta_2)}{sin(\theta_2 - \theta_3)}& -\frac{L_4*cos(\theta_2)*sin(\theta_3 - \theta_4)}{sin(\theta_2 - \theta_3)}
+\end{bmatrix}
+```
+## 
+```math
+\large \tag{3.3}
+\begin{bmatrix}
+\dot x_C\\
+\dot y_C
+\end{bmatrix}=
+J_{xy}\begin{bmatrix}
+\dot \theta_1\\
+\dot \theta_4
+\end{bmatrix}
+```
+##
+We want convert force back to torque.
+```math
+\large \tag{3.4}
+\begin{bmatrix}
+\vec F_x\\
+\vec F_y
+\end{bmatrix} J_{xy}^T=
+\begin{bmatrix}
+T_1\\
+T_4
+\end{bmatrix}
+```
+##
+Rotate $\vec F_x$ and $\vec F_y$ to the desire $\vec F$ and $\vec F_T$
+```math
+\large \tag{3.5}
+R=
+\begin{bmatrix}
+cos(\theta_0 - \frac{\pi}{2})& -sin(\theta_0 - \frac{\pi}{2})\\
+sin(\theta_0 - \frac{\pi}{2})& cos(\theta_0 - \frac{\pi}{2})
+\end{bmatrix}
+```
+##
+Also, convert the $\vec F_T$ to $T$ since we want the torque devided $L_0$ and the direction now is negate. 
+```math
+\large \tag{3.6}
+M=
+\begin{bmatrix}
+0 & -\frac{1}{L_0}\\
+1&0
+\end{bmatrix}
+```
+##
+We get the final Matrix we want
+```math
+\large \tag{3.7}
+\begin{bmatrix}
+T_1 \\ T_4
+\end{bmatrix}= J_{xy}^T R  M
+\begin{bmatrix}
+\vec F \\ T
+\end{bmatrix}
+```
+##
+Use MATLAB we can find
+
+```math
+\large \tag{3.8}
+J_{final}=
+\begin{bmatrix}
+-\frac{L_1sin(\theta_0 - \theta_3)sin(\theta_1 - \theta_2)}{sin(\theta_2 - \theta_3)}& -\frac{L_1sin(\theta_1 - \theta_2)cos(\theta_0 - \theta_3)}{L_0sin(\theta_2 - \theta_3)}\\
+-\frac{L_4sin(\theta_0 - \theta_2 )sin(\theta_3  - \theta_4 )}{sin(\theta_2  - \theta_3 )}& -\frac{L_4sin(\theta_3  - \theta_4 )cos(\theta_0  - \theta_2 )}{L_0sin(\theta_2  - \theta_3 )}
+\end{bmatrix}
+```
+```math
+\large 
+J_{final}=
+\begin{bmatrix}
+\frac{L_1sin(\theta_0 - \theta_3)sin(\theta_1 - \theta_2)}{sin(\theta_3 - \theta_2)}& \frac{L_1sin(\theta_1 - \theta_2)cos(\theta_0 - \theta_3)}{L_0sin(\theta_3 - \theta_2)}\\
+\frac{L_4sin(\theta_0 - \theta_2 )sin(\theta_3  - \theta_4 )}{sin(\theta_3  - \theta_2 )}& \frac{L_4sin(\theta_3  - \theta_4 )cos(\theta_0  - \theta_2 )}{L_0sin(\theta_3  - \theta_2 )}
+\end{bmatrix}
+```
+
+
+
+##
+The MATLAB code for finding $J_{final}$
+```MATLAB
+syms theta0(t) theta1(t) theta2(t) theta3(t) theta4(t) theta_dot_1 theta_dot_4 l1 l2 l3 l4 l5 l0
+x_B = l1*cos(theta1);
+y_B = l1*sin(theta1);
+x_C = x_B+l2*cos(theta2);
+y_C = y_B+l2*sin(theta2);
+x_D = l5+l4*cos(theta4);
+y_D = l4*sin(theta4);
+x_dot_B = diff(x_B,t);
+y_dot_B = diff(y_B,t);
+x_dot_C = diff(x_C,t);
+y_dot_C = diff(y_C,t);
+x_dot_D = diff(x_D,t);
+y_dot_D = diff(y_D,t);
+
+
+%equation(2.2)
+theta_dot_2 = ((x_dot_B-x_dot_D)*cos(theta3)+(y_dot_B-y_dot_D)*sin(theta3))/l2/sin(theta2-theta3);
+
+x_dot_C = subs(x_dot_C,diff(theta2,t),theta_dot_2);
+x_dot_C = subs(x_dot_C, [diff(theta1,t),diff(theta4,t)], [theta_dot_1,theta_dot_4]);
+y_dot_C = subs(y_dot_C,diff(theta2,t),theta_dot_2);
+y_dot_C = subs(y_dot_C, [diff(theta1,t),diff(theta4,t)], [theta_dot_1,theta_dot_4]);
+
+x_dot = [x_dot_C; y_dot_C];
+q_dot = [theta_dot_1; theta_dot_4];
+x_dot = simplify(collect(x_dot,q_dot));
+J = simplify(jacobian(x_dot,q_dot))
+
+R = [cos(theta0-pi/2) -sin(theta0-pi/2);
+     sin(theta0-pi/2)  cos(theta0-pi/2)];
+
+M = [0 -1/l0;
+     1     0];
+J_final = simplify(J.'*R*M)
+```
 
 
 
