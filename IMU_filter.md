@@ -123,8 +123,10 @@ Quaternion is great to simplfy compute process. Also it doesn't have a gimbal lo
 The represented form of quaternion:
 
 ```math
-\Large \tag*{} q = q_r + q_ii + q_jj + q_kk\\
-(q_r,q_i,q_j,q_k\in R)
+\Large \tag*{} q = q_r + q_ii + q_jj + q_kk
+```
+```math
+\Large \tag*{} (q_r,q_i,q_j,q_k\in R)
 ```
 
 This is unit quaternion. Therefore, 
