@@ -21,7 +21,7 @@ If the IMU is not orthogonal, we need to fix that
 <img src="./Images/Non-orthogonal_sensor.png" width="500"/>
 
 ```math 
-\Large s^B = Ts^S, T= \begin{bmatrix}
+\Large \tag*{}s^B = Ts^S, T= \begin{bmatrix}
 1&-\beta_{yz}&\beta_{zy}\\
 \beta_{xz}&1& -\beta_{zx}\\
 -\beta_{xy}&\beta_{yx}&1\\
@@ -30,7 +30,7 @@ If the IMU is not orthogonal, we need to fix that
 ##
 For accelerometer, we set $\beta_{xz}, -\beta_{xy}, \beta_{yx}$ zero: 
 ```math
-\Large
+\Large \tag*{}
 a^O = T^aa^S, T^a= \begin{bmatrix}
 1& -\alpha_{yz}&\alpha_{zy}\\
 0&1& -\alpha_{zx}\\
@@ -40,7 +40,7 @@ a^O = T^aa^S, T^a= \begin{bmatrix}
 ##
 For gyro scope, follow the $s^B$ we got:
 ```math 
-\Large \omega^O = T^g\omega^S, T^g= \begin{bmatrix}
+\Large \tag*{} \omega^O = T^g\omega^S, T^g= \begin{bmatrix}
 1& -\gamma_{yz}& \gamma_{zy}\\
 \gamma_{xz}&1& -\gamma_{zx}\\
 -\gamma_{xy}& \gamma_{yx}&1\\
@@ -52,14 +52,14 @@ We have bias for both gyro scope and accelerometer.
 we can find the zero offset by these formula.
 
 ```math
-\Large \begin{cases} b^g = \frac{1}{N}\sum_{i=1}^{N} \omega^{bias}_i \\
+\Large \tag*{} \begin{cases} b^g = \frac{1}{N}\sum_{i=1}^{N} \omega^{bias}_i \\
  b^a = \frac{1}{N}\sum_{i=1}^{N} a^{bias}_i
  \end{cases}
 ```
 ##
 They can be shown in matrix format:
 ```math
-\Large
+\Large \tag*{}
 \begin{cases} 
 b^g = \begin{bmatrix} 
 b^g_x & b^g_y & b^g_z\\
@@ -83,7 +83,7 @@ Note: If we want a better calibration for sensitivity, we will need to measure s
 Ending up get these matrix:
 
 ```math
-\Large K^g = \begin{bmatrix} 
+\Large \tag*{} K^g = \begin{bmatrix} 
 s^g_x   & 0     & 0\\
 0       & s^g_y & 0\\
 0       & 0     & s^g_z
@@ -91,7 +91,7 @@ s^g_x   & 0     & 0\\
 ```
 
 ```math
-\Large K^a = \begin{bmatrix} 
+\Large \tag*{} K^a = \begin{bmatrix} 
 s^a_x   & 0     & 0\\
 0       & s^a_y & 0\\
 0       & 0     & s^a_z
@@ -105,7 +105,7 @@ For Euler angles is repersented with pitch, roll, and yaw.
 The rotation matrix for Euler angle is shown below:
 
 ```math
-\Large \begin{aligned}R=R_{z}(\alpha )\,R_{y}(\beta )\,R_{x}(\gamma )& \
+\Large \tag*{} \begin{aligned}R=R_{z}(\alpha )\,R_{y}(\beta )\,R_{x}(\gamma )& \
 ={\overset {\text{yaw}}{\begin{bmatrix}\cos \alpha &-\sin \alpha &0\\\sin \alpha &\cos \alpha &0\\0&0&1\\\end{bmatrix}}}{\overset {\text{pitch}}{\begin{bmatrix}\cos \beta &0&\sin \beta \\0&1&0\\-\sin \beta &0&\cos \beta \\\end{bmatrix}}}{\overset {\text{roll}}{\begin{bmatrix}1&0&0\\0&\cos \gamma &-\sin \gamma \\0&\sin \gamma &\cos \gamma \\\end{bmatrix}}}
 \end{aligned}
 ```
@@ -121,9 +121,15 @@ Quaternion is great to simplfy compute process. Also it doesn't have a gimbal lo
 ##
 The represented form of quaternion:
 
-$\Large q = q_r + q_ii + q_jj + q_kk$ $\Large (q_r,q_i,q_j,q_k\in R)$ 
+```math
+\Large \tag*{} q = q_r + q_ii + q_jj + q_kk\\
+(q_r,q_i,q_j,q_k\in R)
+```
 
-This is unit quaternion. Therefore, $\Large q_r^2 + q_i^2 + q_j^2 + q_k^2 = 1$
+This is unit quaternion. Therefore, 
+```math
+\Large \tag*{} q_r^2 + q_i^2 + q_j^2 + q_k^2 = 1
+```
 ##
 Quaternion-derived rotation matrix: 
 <div id="2.1"></div>
@@ -137,33 +143,35 @@ R =\begin{bmatrix}
 \end{bmatrix}
 ```
 Where $\Large s = \left\| q \right\|^{-2} = 1^{-2}$ When q is a unit quaternion.
-Also, $\Large q_r = cos(\frac{1}{2} \theta), q_i = sin(\frac{1}{2} \theta)u_x, q_j = sin(\frac{1}{2} \theta)u_y, q_z = sin(\frac{1}{2} \theta)u_z$
+Also, 
+```math
+\Large \tag*{} q_r = cos(\frac{1}{2} \theta), q_i = sin(\frac{1}{2} \theta)u_x, q_j = sin(\frac{1}{2} \theta)u_y, q_z = sin(\frac{1}{2} \theta)u_z
+```
 ##
 We need the quaternion differentiation of q for the angular speed $\frac{dq}{qt} = \dot{q} = \frac{1}{2}\Omega q$
 
 ```math
-\Large \Omega = \begin{bmatrix}
+\Large \tag*{} \Omega = \begin{bmatrix}
 0           & -\omega_x & -\omega_y & -\omega_z\\
 \omega_x    & 0         & \omega_z  & -\omega_y\\
 \omega_y    & -\omega_z & 0         & \omega_x\\
 \omega_z    & \omega_y  & -\omega_x & 0
 \end{bmatrix}
 ```
-
-$\Large q_{t+\Delta t} = q_t + \dot{q} \cdot \Delta t$
+```math
+\Large \tag*{} q_{t+\Delta t} = q_t + \dot{q} \cdot \Delta t
+```
 ##
 Quaternions to Euler angle:
 
 ```math
-\Large \begin{bmatrix} \theta \\ \phi \\ \psi\end{bmatrix} = \begin{bmatrix} arcsin(2(q_rq_j - q_iq_k))  \\ arctan(\frac{2q_rq_k+2q_iq_j}{1-2(q_j^2q_k^2)}) \\ arctan(\frac{2q_rq_i+2q_jq_k}{1-2(q_i^2q_j^2)})\end{bmatrix}
+\Large \tag*{} \begin{bmatrix} \theta \\ \phi \\ \psi\end{bmatrix} = \begin{bmatrix} arcsin(2(q_rq_j - q_iq_k))  \\ arctan(\frac{2q_rq_k+2q_iq_j}{1-2(q_j^2q_k^2)}) \\ arctan(\frac{2q_rq_i+2q_jq_k}{1-2(q_i^2q_j^2)})\end{bmatrix}
 ```
 ##
 ### Gravity to angle
-since $g = \begin{bmatrix}
-0 & 0 & 1 
-\end{bmatrix}^T$, when imu is not accelerating, we get:
+since $g = [0 \space 0 \space 1]^T$, when imu is not accelerating, we get:
 ```math
-\Large h(q) = R \cdot g = \begin{bmatrix}
+\Large \tag*{} h(q) = R \cdot g = \begin{bmatrix}
 2(q_iq_k-q_jq_r) \\
 2(q_jq_k+q_iq_r) \\
 1-2(q_i^2+q_j^2)
@@ -198,36 +206,40 @@ By this, we can know if we should use the data from accelerometer.
 ##
 Define the state estimate be the gravity which we want to predict
 ```math 
-\Large x = \begin{bmatrix}g_x, g_y, g_z\end{bmatrix}^T 
+\Large \tag*{} x = \begin{bmatrix}g_x, g_y, g_z\end{bmatrix}^T 
 ```
 ##
-
-$\Large s_k = F_kx_{k-1} + w_{k-1}$
-
-$\Large F_k = I + \Delta t \Omega$ ; since q_r is ignored. $\Omega$ becomes: 
+```math
+\Large \tag*{} s_k = F_kx_{k-1} + w_{k-1}
+```
+```math
+\Large \tag*{} F_k = I + \Delta t \Omega
+``` 
+since $q_r$ is ignored. $\Omega$ becomes: 
 
 ```math
-\Large \Omega = \begin{bmatrix}
+\Large \tag*{} \Omega = \begin{bmatrix}
 0         & \omega_z  & -\omega_y\\
 -\omega_z & 0         & \omega_x\\
 \omega_y  & -\omega_x & 0
 \end{bmatrix}
 ```
 ```math
-\Large F_k = \begin{bmatrix} 1         & \omega_z \Delta t  & -\omega_y \Delta t \\
+\Large \tag*{} F_k = \begin{bmatrix} 1         & \omega_z \Delta t  & -\omega_y \Delta t \\
 -\omega_z \Delta t & 1         & \omega_x \Delta t \\
 \omega_y \Delta t  & -\omega_x \Delta t  & 1  \end{bmatrix}
 ```
 
 ```math
-\Large z = \begin{bmatrix} 
+\Large \tag*{} z = \begin{bmatrix} 
 a_x\\ a_y \\ a_z \end{bmatrix}
 ```
-
-$\Large z_k = H_kx_k + v_k$
+```math
+\Large \tag*{} z_k = H_kx_k + v_k
+```
 
 ```math
-\Large H_k = \begin{bmatrix} 
+\Large \tag*{} H_k = \begin{bmatrix} 
 1&0&0\\ 0&1&0 \\ 0&0&1 \end{bmatrix}
 ```
 
@@ -260,17 +272,17 @@ I will use this one for our IMU.
 
 First, define 
 ```math
-\Large x = \begin{bmatrix} q \end{bmatrix} = \begin{bmatrix} q_r\\ q_i \\ q_j \\ q_k \end{bmatrix}
+\Large \tag*{} x = \begin{bmatrix} q \end{bmatrix} = \begin{bmatrix} q_r\\ q_i \\ q_j \\ q_k \end{bmatrix}
 ```
 ##
 Define state transition model:\
 ```math
-\Large f(x_k) = \begin{bmatrix} q_k + \frac{1}{2}(\Omega_k) \Delta t q_k \end{bmatrix}
+\Large \tag*{} f(x_k) = \begin{bmatrix} q_k + \frac{1}{2}(\Omega_k) \Delta t q_k \end{bmatrix}
 ```
 ##
 Define state transition model:\
 ```math 
-\Large h(q) = R \cdot g = \begin{bmatrix}
+\Large \tag*{} h(q) = R \cdot g = \begin{bmatrix}
 2(q_iq_k-q_jq_r) \\
 2(q_jq_k+q_iq_r) \\
 1-2(q_i^2+q_j^2)
