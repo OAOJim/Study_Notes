@@ -84,8 +84,16 @@ L_0      = \sqrt{(x_C - \frac{L_5}{2})^2 + y_C^2} \\
 \end{cases} 
 ```
 ##
+Since we want the $\theta_0$ + $\theta_b$
 
+```math
+\tag{1.8}
+\begin{align}
+\theta_{final} = (\theta_0 - \theta_0 + \pi)\mod(2\pi)
+\end{align}
+```
 
+Note: This function depends on the direction you set for your IMU and $\theta_0$
 ## 2. Find equations for velocity
 
 We now have
@@ -144,6 +152,18 @@ From [(1.7)](#1.7) we can get:
 ```
 
 Note:  $L_2 = L_3$ and $L_1 = L_4$ in many design cases. 
+
+##
+Since we want the $\theta_0$ + $\theta_b$
+
+```math
+\tag{2.5}
+\begin{align}
+\dot \theta_{final} = (\dot \theta_0 - \dot \theta_0)
+\end{align}
+```
+
+Note: This function depends on the direction you set for your IMU and $\dot \theta_0$
 ##
 ## 3. Virtual Model Control
 Virtual model control is a motion control framework which uses virtual components to calculate virtual forces. By this, we can get a why to get motors' torques for the controller's output. 
