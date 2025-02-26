@@ -233,7 +233,7 @@ T_4
 \end{bmatrix}
 ```
 ##
-Rotate $\vec F_x$ and $\vec F_y$ to the desire $\vec F$ and $\vec F_T$
+Rotate $\vec F$ and $\vec F_T$ to $\vec F_x$ and $\vec F_y$
 ```math
 \large \tag{3.5}
 R=
@@ -243,7 +243,7 @@ sin(\theta_0 - \frac{\pi}{2})& cos(\theta_0 - \frac{\pi}{2})
 \end{bmatrix}
 ```
 ##
-Also, convert the $\vec F_T$ to $T$ since we want the torque devided $L_0$ and the direction now is negate. 
+Also, convert $\vec F_T$ to $T$ since we want the torque devided $L_0$ and the direction should be negate for matching the model we set. 
 ```math
 \large \tag{3.6}
 M=
@@ -258,7 +258,7 @@ We get the final Matrix we want
 \large \tag{3.7}
 \begin{bmatrix}
 T_1 \\ T_4
-\end{bmatrix}= J_{xy}^T R  M
+\end{bmatrix}= J_{xy}^T R  M^T
 \begin{bmatrix}
 \vec F \\ T
 \end{bmatrix}
