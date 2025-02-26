@@ -270,11 +270,18 @@ Use MATLAB we can find
 \large \tag{3.8}
 J_{final}=
 \begin{bmatrix}
-\frac{L_1sin(\theta_0 - \theta_3)sin(\theta_1 - \theta_2)}{sin(\theta_2 - \theta_3)}& \frac{L_1sin(\theta_1 - \theta_2)cos(\theta_0 - \theta_3)}{L_0sin(\theta_2 - \theta_3)}\\
-\frac{L_4sin(\theta_0 - \theta_2 )sin(\theta_3  - \theta_4 )}{sin(\theta_2  - \theta_3 )}& \frac{L_4sin(\theta_3  - \theta_4 )cos(\theta_0  - \theta_2 )}{L_0sin(\theta_2  - \theta_3 )}
+-\frac{L_1sin(\theta_0 - \theta_3)sin(\theta_1 - \theta_2)}{sin(\theta_2 - \theta_3)}& -\frac{L_1sin(\theta_1 - \theta_2)cos(\theta_0 - \theta_3)}{L_0sin(\theta_2 - \theta_3)}\\
+-\frac{L_4sin(\theta_0 - \theta_2 )sin(\theta_3  - \theta_4 )}{sin(\theta_2  - \theta_3 )}& -\frac{L_4sin(\theta_3  - \theta_4 )cos(\theta_0  - \theta_2 )}{L_0sin(\theta_2  - \theta_3 )}
 \end{bmatrix}
 ```
-
+```math
+\large \tag{3.8}
+J_{final}=
+\begin{bmatrix}
+\frac{L_1sin(\theta_0 - \theta_3)sin(\theta_1 - \theta_2)}{sin(\theta_3 - \theta_2)}& \frac{L_1sin(\theta_1 - \theta_2)cos(\theta_0 - \theta_3)}{L_0sin(\theta_3 - \theta_2)}\\
+\frac{L_4sin(\theta_0 - \theta_2 )sin(\theta_3  - \theta_4 )}{sin(\theta_3  - \theta_2)}& \frac{L_4sin(\theta_3  - \theta_4 )cos(\theta_0  - \theta_2 )}{L_0sin(\theta_3  - \theta_2 )}
+\end{bmatrix}
+```
 
 
 
