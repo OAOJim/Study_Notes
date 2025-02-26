@@ -273,7 +273,7 @@ In [7], it shows a similar algorithm with a 6 axis IMU which is what we want.
 I will use this one for our IMU. 
 ##
 
-First, define 
+First, define quaternion data set
 ```math
 \Large \tag*{} x = \begin{bmatrix} q \end{bmatrix} = \begin{bmatrix} q_r\\ q_i \\ q_j \\ q_k \end{bmatrix}
 ```
@@ -283,7 +283,7 @@ Define state transition model:\
 \Large \tag*{} f(x_k) = \begin{bmatrix} q_k + \frac{1}{2}(\Omega_k) \Delta t q_k \end{bmatrix}
 ```
 ##
-Define state transition model:\
+Define state transition model:
 ```math 
 \Large \tag*{} h(q) = R \cdot g = \begin{bmatrix}
 2(q_iq_k-q_jq_r) \\
@@ -296,7 +296,7 @@ q_r^2 - q_i^2 - q_j^2 + q_k^2
 \end{bmatrix}
 ```
 ##
-Find the Jacobian of $f(x_k)$ and $h(x_k)$, $F_k$ and $H_k$, by MATLAB.
+Then Find the Jacobian of $f(x_k)$ and $h(x_k)$, $F_k$ and $H_k$, by MATLAB.
 ```objectivec
 syms q0 q1 q2 q3;
 syms gx gy gz;
@@ -318,15 +318,15 @@ h = [2*(q1*q3 - q0*q2);
      q0^2 - q1^2 - q2^2 + q3^2];
 H = simplify(jacobian(h,x))
 ```
-##
-Then follow the equations for EKF.
+## 
+### How EKF Works
+#### Init
+1. Define the $x$ (You can use any value for initial )
+2. Define Q (process noise)amd R (observation noise) 
+3. 
 
 
-Note: Since the gravity is point down all the time. We need to ignore $q_k$ in the updata 
 
-The people also used Chi-squared test I will do futher learning in that later
-
-There are people also predict $\omega^{bias}$ Since our robot runs in a really stable environment and short time. We don't need to do bias.
 
 ## 6. EKF with 9 axis  
 

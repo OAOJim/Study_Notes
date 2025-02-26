@@ -248,8 +248,8 @@ Also, convert the $\vec F_T$ to $T$ since we want the torque devided $L_0$ and t
 \large \tag{3.6}
 M=
 \begin{bmatrix}
-0 & -\frac{1}{L_0}\\
-1&0
+1 & 0\\
+0 &-\frac{1}{L_0}
 \end{bmatrix}
 ```
 ##
@@ -270,18 +270,11 @@ Use MATLAB we can find
 \large \tag{3.8}
 J_{final}=
 \begin{bmatrix}
--\frac{L_1sin(\theta_0 - \theta_3)sin(\theta_1 - \theta_2)}{sin(\theta_2 - \theta_3)}& -\frac{L_1sin(\theta_1 - \theta_2)cos(\theta_0 - \theta_3)}{L_0sin(\theta_2 - \theta_3)}\\
--\frac{L_4sin(\theta_0 - \theta_2 )sin(\theta_3  - \theta_4 )}{sin(\theta_2  - \theta_3 )}& -\frac{L_4sin(\theta_3  - \theta_4 )cos(\theta_0  - \theta_2 )}{L_0sin(\theta_2  - \theta_3 )}
+\frac{L_1sin(\theta_0 - \theta_3)sin(\theta_1 - \theta_2)}{sin(\theta_2 - \theta_3)}& \frac{L_1sin(\theta_1 - \theta_2)cos(\theta_0 - \theta_3)}{L_0sin(\theta_2 - \theta_3)}\\
+\frac{L_4sin(\theta_0 - \theta_2 )sin(\theta_3  - \theta_4 )}{sin(\theta_2  - \theta_3 )}& \frac{L_4sin(\theta_3  - \theta_4 )cos(\theta_0  - \theta_2 )}{L_0sin(\theta_2  - \theta_3 )}
 \end{bmatrix}
 ```
-```math
-\large \tag*{} 
-J_{final}=
-\begin{bmatrix}
-\frac{L_1sin(\theta_0 - \theta_3)sin(\theta_1 - \theta_2)}{sin(\theta_3 - \theta_2)}& \frac{L_1sin(\theta_1 - \theta_2)cos(\theta_0 - \theta_3)}{L_0sin(\theta_3 - \theta_2)}\\
-\frac{L_4sin(\theta_0 - \theta_2 )sin(\theta_3  - \theta_4 )}{sin(\theta_3  - \theta_2 )}& \frac{L_4sin(\theta_3  - \theta_4 )cos(\theta_0  - \theta_2 )}{L_0sin(\theta_3  - \theta_2 )}
-\end{bmatrix}
-```
+
 
 
 
@@ -317,11 +310,11 @@ q_dot = [theta_dot_1; theta_dot_4];
 x_dot = simplify(collect(x_dot,q_dot));
 J = simplify(jacobian(x_dot,q_dot))
 
-R = [cos(theta0-pi/2) -sin(theta0-pi/2);
-     sin(theta0-pi/2)  cos(theta0-pi/2)];
+R = [cos(theta0 - pi/2) -sin(theta0 - pi/2);
+     sin(theta0 - pi/2)  cos(theta0 - pi/2)];
 
-M = [0 -1/l0;
-     1     0];
+M = [1         0;
+     0     -1/l0];
 J_final = simplify(J.'*R*M)
 ```
 
