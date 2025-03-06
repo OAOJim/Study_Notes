@@ -146,7 +146,7 @@ From [(1.7)](#1.7) we can get:
 ```math
 \Large\tag{2.4}
 \begin{cases}
-\dot \theta_0 = \frac{(x_C-\frac{L_5}{2})\dot y_C + y_C\dot x_C}{(x_C-\frac{L_5}{2})^2+y_C^2} \\
+\dot \theta_0 = \frac{(x_C-\frac{L_5}{2})\dot y_C - y_C\dot x_C}{(x_C-\frac{L_5}{2})^2+y_C^2} \\
 \dot L_0 = \frac{(x_C-\frac{L_5}{2})\cdot \dot x_C + y_C \cdot \dot y_C}{L_0}
 \end{cases} 
 ```
