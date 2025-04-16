@@ -278,7 +278,7 @@ First, define quaternion data set
 \Large \tag*{} x = \begin{bmatrix} q \end{bmatrix} = \begin{bmatrix} q_r\\ q_i \\ q_j \\ q_k \end{bmatrix}
 ```
 ##
-Define state transition model:\
+Define state transition model:
 ```math
 \Large \tag*{} f(x_k) = \begin{bmatrix} q_k + \frac{1}{2}(\Omega_k) \Delta t q_k \end{bmatrix}
 ```
