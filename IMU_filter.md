@@ -164,8 +164,7 @@ We need the quaternion differentiation of q for the angular speed $\frac{dq}{qt}
 ```math
 \Large \tag*{} q_{t+\Delta t} = q_t + \dot{q} \cdot \Delta t
 ```
-##
-Quaternions to Euler angle:
+##  Quaternions to Euler angle:
 
 ```math
 \Large \tag*{} \begin{bmatrix} \theta \\ \phi \\ \psi\end{bmatrix} = \begin{bmatrix} arcsin(2(q_rq_j - q_iq_k))  \\ arctan(\frac{2q_rq_k+2q_iq_j}{1-2(q_j^2q_k^2)}) \\ arctan(\frac{2q_rq_i+2q_jq_k}{1-2(q_i^2q_j^2)})\end{bmatrix}
@@ -318,14 +317,64 @@ h = [2*(q1*q3 - q0*q2);
      q0^2 - q1^2 - q2^2 + q3^2];
 H = simplify(jacobian(h,x))
 ```
+
+The result is
+```math 
+\Large \tag*{} F = \begin{bmatrix}
+1 && -(dt*gx)/2 && -(dt*gy)/2 && -(dt*gz)/2 \\
+(dt*gx)/2&&         1&&  (dt*gz)/2&& -(dt*gy)/2 \\
+(dt*gy)/2&&-(dt*gz)/2&&          1&&  (dt*gx)/2 \\
+(dt*gz)/2&& (dt*gy)/2&& -(dt*gx)/2&&          1
+\end{bmatrix} 
+```
+```math 
+\Large \tag*{} H = \begin{bmatrix}
+-2*q2&&  2*q3&& -2*q0&& 2*q1\\
+ 2*q1&&  2*q0&&  2*q3&& 2*q2\\
+ 2*q0&& -2*q1&& -2*q2&& 2*q3
+\end{bmatrix} 
+```
 ## 
-### How EKF Works
+### EKF Work flow
 #### Init
-1. Define the $x$ (You can use any value for initial )
+1. Initial the Quaternion $x$
 2. Define Q (process noise)amd R (observation noise) 
-3. 
-
-
+3. Initial the P matrix (This should be something similar to R value)
+#### Update
+1. Use matrix $F$ to update the Quaternion $x$ Then unit the queaternion
+```math 
+\small \tag*{} \hat{x} =  x F 
+```
+2. Use the matrix $F$ we found earlier to update $P$ matrix 
+```math 
+\small \tag*{} \hat{P} = F P F^T + Q\cdot dt 
+```
+3. Use the matrix $H$ to find Kalman gain, $K$
+```math 
+\small \tag*{} K =  \hat{P} H^T (H P H^T + R)^{-1}
+```
+4. Test if we want to use accelerometer data or not by checking if the acceration is near gravity. 
+If no, 
+```math 
+\small \tag*{} P = \hat{P} 
+```
+```math 
+\small \tag*{} x = \hat{x} 
+```
+5. Find error ($y$) between the predicted($x$) and the measured ($z$)
+```math 
+\small \tag*{} y = z - H \hat{x} 
+```
+6. Update $x$
+```math 
+\small \tag*{} x = \hat{x} + K y 
+```
+6. Update $P$
+```math 
+\small \tag*{} P = (I-K H)\hat{P} 
+```
+#### Output
+Use [Quaternions to euler angle](#quaternions-to-euler-angle) formula to convert back to Euler angle for output.
 
 
 ## 6. EKF with 9 axis  
