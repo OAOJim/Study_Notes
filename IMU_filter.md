@@ -8,7 +8,7 @@ YiChun (Jim) Liao
 :orange_circle:[2. Quaternion vs Euler Angles ](#2-quaternion-vs-euler-angles)\
 :red_circle:[3. Complementary Filter](#3-complementary-filter)\
 :orange_circle:[4. Kalman + Mahony Filter ](#4-kalman--mahony-filter)\
-:orange_circle:[5. EKF (Extended Kalman filter) with 6 axis](#5-ekf-extended-kalman-filter-with-6-axis)\
+:green_circle:[5. EKF (Extended Kalman filter) with 6 axis](#5-ekf-extended-kalman-filter-with-6-axis)\
 :red_circle:[6. EKF with 9 axis](#6-ekf-with-9-axis)
 <div align="center">
 
